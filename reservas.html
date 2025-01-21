@@ -60,14 +60,21 @@
       Caso ainda não tenha feito sua reserva, você pode fazer abaixo.
     </p>
     
-    <input type="text" id="nome" placeholder="Digite seu nome" />
-    <button class="btn-reservar" onclick="fazerReserva()">Reservar</button>
+    <!-- Div que exibe o campo para inserir nome, se não houver reserva -->
+    <div id="formulario-reserva" style="display: none;">
+      <input type="text" id="nome" placeholder="Digite seu nome" />
+      <button class="btn-reservar" onclick="fazerReserva()">Reservar</button>
+    </div>
 
+    <!-- Exibe informações sobre a reserva, se já houver -->
     <div class="reserva-info" id="reserva-info"></div>
+    
+    <!-- Botão de cancelar reserva -->
     <button class="btn-cancelar" id="cancelar-btn" style="display:none;" onclick="cancelarReserva()">Cancelar Reserva</button>
   </div>
 
   <script>
+    // Função para fazer a reserva
     function fazerReserva() {
       const nome = document.getElementById('nome').value;
       if (!nome) {
@@ -75,33 +82,45 @@
         return;
       }
 
+      // Verifica se já existe uma reserva
       const reservaExistente = localStorage.getItem('reserva');
       if (reservaExistente) {
         alert("Você já tem uma reserva!");
         return;
       }
 
-      localStorage.setItem('reserva', nome);
-      document.getElementById('reserva-info').innerText = `Reserva confirmada em nome de: ${nome}`;
+      // Atribui um número de mesa aleatório (exemplo de mesas de 1 a 10)
+      const numeroMesa = Math.floor(Math.random() * 10) + 1;
+
+      // Armazena a reserva no localStorage
+      const reserva = { nome, numeroMesa };
+      localStorage.setItem('reserva', JSON.stringify(reserva));
+
+      document.getElementById('reserva-info').innerText = `Reserva confirmada em nome de: ${nome}, Mesa: ${numeroMesa}`;
       document.getElementById('cancelar-btn').style.display = 'inline-block';
+      document.getElementById('formulario-reserva').style.display = 'none';
     }
 
+    // Função para cancelar a reserva
     function cancelarReserva() {
-      const reserva = localStorage.getItem('reserva');
+      const reserva = JSON.parse(localStorage.getItem('reserva'));
       if (reserva) {
         localStorage.removeItem('reserva');
         document.getElementById('reserva-info').innerText = '';
         document.getElementById('cancelar-btn').style.display = 'none';
+        document.getElementById('formulario-reserva').style.display = 'inline-block';  // Voltar a mostrar o formulário
         alert("Sua reserva foi cancelada.");
       }
     }
 
-    // Exibir a reserva caso já tenha sido feita
+    // Exibe as informações da reserva caso já tenha sido feita
     window.onload = function() {
-      const reservaExistente = localStorage.getItem('reserva');
+      const reservaExistente = JSON.parse(localStorage.getItem('reserva'));
       if (reservaExistente) {
-        document.getElementById('reserva-info').innerText = `Reserva confirmada em nome de: ${reservaExistente}`;
+        document.getElementById('reserva-info').innerText = `Reserva confirmada em nome de: ${reservaExistente.nome}, Mesa: ${reservaExistente.numeroMesa}`;
         document.getElementById('cancelar-btn').style.display = 'inline-block';
+      } else {
+        document.getElementById('formulario-reserva').style.display = 'inline-block'; // Mostrar o formulário para nova reserva
       }
     };
   </script>
