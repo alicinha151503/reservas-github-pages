@@ -61,6 +61,20 @@
       text-align: left;
       margin-bottom: 5px;
     }
+
+    /* Estilo para a exibição da reserva confirmada */
+    .reserva-info {
+      background-color: #e7f7e7;
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 20px;
+      color: #333;
+      font-size: 18px;
+      font-weight: bold;
+    }
+    .reserva-info p {
+      margin: 5px 0;
+    }
   </style>
 </head>
 <body>
@@ -96,7 +110,13 @@
       <button onclick="fazerReserva()">Confirmar Reserva</button>
     </div>
 
-    <div id="reserva-info" style="margin-top: 20px;"></div>
+    <!-- Área para exibição da reserva confirmada -->
+    <div id="reserva-info" class="reserva-info" style="display: none;">
+      <p><strong>Reserva confirmada!</strong></p>
+      <p><strong>Nome:</strong> <span id="nome-confirmado"></span></p>
+      <p><strong>Mesas:</strong> <span id="mesa-confirmada"></span></p>
+      <p><strong>Data:</strong> <span id="data-confirmada"></span></p>
+    </div>
   </div>
 
   <script>
@@ -117,8 +137,11 @@
       const reserva = { nome, dataInicial, dataFinal, numeroMesa };
       localStorage.setItem('reserva_' + nome, JSON.stringify(reserva));
 
-      // Exibir mensagem de confirmação
-      document.getElementById('reserva-info').innerText = `Reserva confirmada em nome de: ${nome}, Mesa: ${numeroMesa}, Data: ${dataInicial} a ${dataFinal}`;
+      // Exibir mensagem de confirmação organizada
+      document.getElementById('reserva-info').style.display = 'block';
+      document.getElementById('nome-confirmado').innerText = nome;
+      document.getElementById('mesa-confirmada').innerText = numeroMesa;
+      document.getElementById('data-confirmada').innerText = `${dataInicial} a ${dataFinal}`;
     }
   </script>
 </body>
