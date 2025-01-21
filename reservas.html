@@ -32,14 +32,14 @@
       font-size: 16px;
       margin-bottom: 30px;
     }
-    .form-container input, .form-container button {
+    .form-container input, .form-container select, .form-container button {
       width: 100%;
       padding: 10px;
       margin: 10px 0;
       border-radius: 5px;
       font-size: 16px;
     }
-    .form-container input {
+    .form-container input, .form-container select {
       border: 1px solid #ccc;
     }
     .form-container button {
@@ -51,6 +51,16 @@
     .form-container button:hover {
       background-color: #218838;
     }
+    .form-container select {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+    }
+    .form-container label {
+      display: block;
+      text-align: left;
+      margin-bottom: 5px;
+    }
   </style>
 </head>
 <body>
@@ -59,10 +69,29 @@
     <p>Preencha as informações abaixo para fazer sua reserva.</p>
     
     <div class="form-container">
+      <label for="nome">Nome do Funcionário:</label>
       <input type="text" id="nome" placeholder="Nome do Funcionário" />
-      <input type="text" id="data-inicial" placeholder="Data Inicial (dd/mm/aaaa)" />
-      <input type="text" id="data-final" placeholder="Data Final (dd/mm/aaaa)" />
-      <input type="number" id="numero-mesa" placeholder="Número da Mesa" />
+
+      <label for="data-inicial">Data Inicial:</label>
+      <input type="date" id="data-inicial" placeholder="Data Inicial (dd/mm/aaaa)" />
+
+      <label for="data-final">Data Final:</label>
+      <input type="date" id="data-final" placeholder="Data Final (dd/mm/aaaa)" />
+
+      <label for="numero-mesa">Número da Mesa:</label>
+      <select id="numero-mesa">
+        <option value="">Selecione a Mesa</option>
+        <option value="1">Mesa 1</option>
+        <option value="2">Mesa 2</option>
+        <option value="3">Mesa 3</option>
+        <option value="4">Mesa 4</option>
+        <option value="5">Mesa 5</option>
+        <option value="6">Mesa 6</option>
+        <option value="7">Mesa 7</option>
+        <option value="8">Mesa 8</option>
+        <option value="9">Mesa 9</option>
+        <option value="10">Mesa 10</option>
+      </select>
 
       <button onclick="fazerReserva()">Confirmar Reserva</button>
     </div>
