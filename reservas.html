@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de Reserva</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 50px;
+        }
+        .container {
+            width: 50%;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+        }
+        .form-group {
+            margin: 15px 0;
+        }
+        .form-group label {
+            font-size: 16px;
+            display: block;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .button {
+            padding: 15px 30px;
+            font-size: 18px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            width: 100%;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Formulário de Reserva</h2>
+        <form id="reservaForm">
+            <div class="form-group">
+                <label for="nome">Nome do Funcionário</label>
+                <input type="text" id="nome" name="nome" required>
+            </div>
+            <div class="form-group">
+                <label for="data_inicial">Data Inicial</label>
+                <input type="date" id="data_inicial" name="data_inicial" required>
+            </div>
+            <div class="form-group">
+                <label for="data_final">Data Final</label>
+                <input type="date" id="data_final" name="data_final" required>
+            </div>
+            <div class="form-group">
+                <label for="numero_mesa">Número da Mesa</label>
+                <input type="number" id="numero_mesa" name="numero_mesa" required>
+            </div>
+            <button type="button" class="button" onclick="confirmarReserva()">Confirmar Reserva</button>
+        </form>
+    </div>
+
+    <script>
+        function confirmarReserva() {
+            // Aqui você pode fazer uma validação simples (sem backend)
+            const nome = document.getElementById('nome').value;
+            const data_inicial = document.getElementById('data_inicial').value;
+            const data_final = document.getElementById('data_final').value;
+            const numero_mesa = document.getElementById('numero_mesa').value;
+
+            if (nome && data_inicial && data_final && numero_mesa) {
+                alert('Reserva Confirmada!\n' +
+                      'Funcionário: ' + nome + '\n' +
+                      'Data Inicial: ' + data_inicial + '\n' +
+                      'Data Final: ' + data_final + '\n' +
+                      'Número da Mesa: ' + numero_mesa);
+                // Resetar o formulário após a confirmação
+                document.getElementById('reservaForm').reset();
+            } else {
+                alert('Por favor, preencha todos os campos!');
+            }
+        }
+    </script>
+</body>
+</html>
