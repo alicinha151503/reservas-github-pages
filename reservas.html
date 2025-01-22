@@ -120,6 +120,12 @@
   </div>
 
   <script>
+    // Função para formatar a data no formato DD/MM/AAAA
+    function formatarData(data) {
+      const [ano, mes, dia] = data.split('-');
+      return `${dia}/${mes}/${ano}`;
+    }
+
     // Função para fazer a reserva
     function fazerReserva() {
       const nome = document.getElementById('nome').value;
@@ -141,7 +147,7 @@
       document.getElementById('reserva-info').style.display = 'block';
       document.getElementById('nome-confirmado').innerText = nome;
       document.getElementById('mesa-confirmada').innerText = numeroMesa;
-      document.getElementById('data-confirmada').innerText = `${dataInicial} a ${dataFinal}`;
+      document.getElementById('data-confirmada').innerText = `${formatarData(dataInicial)} a ${formatarData(dataFinal)}`;
     }
   </script>
 </body>
