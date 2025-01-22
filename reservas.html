@@ -75,16 +75,41 @@
     .reserva-info p {
       margin: 5px 0;
     }
+
+    /* Estilo para o quadrinho de informações das mesas */
+    .informacoes-mesas {
+      background-color: #e7f7e7;
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 20px;
+      color: #333;
+      font-size: 18px;
+      font-weight: bold;
+      display: inline-block;
+      width: 80%;
+      text-align: left;
+    }
+    .informacoes-mesas p {
+      margin: 5px 0;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Formulário de Reserva</h1>
     <p>Preencha as informações abaixo para fazer sua reserva.</p>
-    
+
+    <!-- Quadrinho com informações das mesas disponíveis -->
+    <div id="informacoes-mesas" class="informacoes-mesas">
+      <p><strong>Total de Mesas:</strong> 10</p>
+      <p><strong>Mesas Reservadas:</strong> <span id="mesas-reservadas">0</span></p>
+      <p><strong>Mesas Disponíveis:</strong> <span id="mesas-disponiveis">10</span></p>
+    </div>
+
+    <!-- Formulário de reserva -->
     <div class="form-container">
       <label for="nome">Nome do Funcionário:</label>
-      <input type="text" id="nome" placeholder="Nome do Funcionário" />
+      <input type="text" id="nome" placeholder="Nome do Funcionário" value="" readonly />
 
       <label for="data-inicial">Data Inicial:</label>
       <input type="date" id="data-inicial" placeholder="Data Inicial (dd/mm/aaaa)" />
@@ -126,6 +151,34 @@
       return `${dia}/${mes}/${ano}`;
     }
 
+    // Função para atualizar as informações sobre as mesas (reservadas e disponíveis)
+    function atualizarInformacoesMesas() {
+      const totalMesas = 10;
+      let mesasReservadas = 0;
+
+      // Verifica as reservas no localStorage
+      for (let i = 0; i < localStorage.length; i++) {
+        const chave = localStorage.key(i);
+        if (chave.startsWith('reserva_')) {
+          mesasReservadas++;
+        }
+      }
+
+      // Atualiza as informações na página
+      const mesasDisponiveis = totalMesas - mesasReservadas;
+      document.getElementById('mesas-reservadas').innerText = mesasReservadas;
+      document.getElementById('mesas-disponiveis').innerText = mesasDisponiveis;
+    }
+
+    // Função para puxar o nome do usuário do localStorage
+    function preencherNome() {
+      const nome = localStorage.getItem('nome');
+      if (nome) {
+        document.getElementById('nome').value = nome;
+        document.getElementById('nome-confirmado').innerText = nome;
+      }
+    }
+
     // Função para fazer a reserva
     function fazerReserva() {
       const nome = document.getElementById('nome').value;
@@ -145,10 +198,15 @@
 
       // Exibir mensagem de confirmação organizada
       document.getElementById('reserva-info').style.display = 'block';
-      document.getElementById('nome-confirmado').innerText = nome;
       document.getElementById('mesa-confirmada').innerText = numeroMesa;
       document.getElementById('data-confirmada').innerText = `${formatarData(dataInicial)} a ${formatarData(dataFinal)}`;
     }
+
+    // Atualizar informações de mesas e preencher nome ao carregar a página
+    window.onload = function() {
+      atualizarInformacoesMesas();
+      preencherNome();
+    };
   </script>
 </body>
 </html>
