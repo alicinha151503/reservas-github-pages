@@ -46,6 +46,21 @@
     .btn-reservar:hover {
       background-color: #0056b3;
     }
+    .informacoes-mesas {
+      background-color: #e7f7e7;
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 20px;
+      color: #333;
+      font-size: 18px;
+      font-weight: bold;
+      display: inline-block;
+      width: 80%;
+      text-align: left;
+    }
+    .informacoes-mesas p {
+      margin: 5px 0;
+    }
   </style>
 </head>
 <body>
@@ -54,7 +69,39 @@
     <p>
       Este sistema foi desenvolvido para melhorar o uso do espaço no setor contábil. Reserve sua mesa antecipadamente para garantir mais conforto e produtividade no ambiente de trabalho.
     </p>
+
+    <!-- Quadrinho com informações das mesas disponíveis -->
+    <div id="informacoes-mesas" class="informacoes-mesas">
+      <p><strong>Total de Mesas:</strong> 10</p>
+      <p><strong>Mesas Reservadas:</strong> <span id="mesas-reservadas">0</span></p>
+      <p><strong>Mesas Disponíveis:</strong> <span id="mesas-disponiveis">10</span></p>
+    </div>
+
     <a href="reservas.html" class="btn-reservar">Reservar</a>
   </div>
+
+  <script>
+    // Função para calcular o número de mesas reservadas
+    function atualizarInformacoesMesas() {
+      const totalMesas = 10;
+      let mesasReservadas = 0;
+
+      // Verifica as reservas no localStorage
+      for (let i = 0; i < localStorage.length; i++) {
+        const chave = localStorage.key(i);
+        if (chave.startsWith('reserva_')) {
+          mesasReservadas++;
+        }
+      }
+
+      // Atualiza as informações na página
+      const mesasDisponiveis = totalMesas - mesasReservadas;
+      document.getElementById('mesas-reservadas').innerText = mesasReservadas;
+      document.getElementById('mesas-disponiveis').innerText = mesasDisponiveis;
+    }
+
+    // Chama a função para atualizar as informações quando a página carregar
+    window.onload = atualizarInformacoesMesas;
+  </script>
 </body>
 </html>
